@@ -1,0 +1,19 @@
+---
+# Reset the environment to a VM snapshot
+
+# Reverting a snapshot in vCenter leaves the machine shutdown - FYI
+- name: Revert to initial snapshot
+  vmware_guest_snapshot:
+    hostname: "{{ vmware_esxi.hostname }}"
+    validate_certs: "{{ vmware_esxi.validate_certs }}"
+    username: "{{ vmware_esxi.username }}"
+    password: "{{ vmware_esxi.password }}"
+    datacenter: "{{ vmware_esxi.datacenter }}"
+    folder: "{{ inventory_esxi.dest_folder }}"
+    name: "{{ inventory_hostname }}"
+    snapshot_name: "{{ inventory_esxi.snapshot_name }}"
+    state: revert
+  delegate_to: localhost
+  become: false
+
+- include_tasks: start_vm.yml

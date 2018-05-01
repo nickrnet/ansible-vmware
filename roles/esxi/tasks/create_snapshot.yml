@@ -1,0 +1,20 @@
+---
+- include_tasks: shutdown_vm.yml
+
+# Creating a snapshot in vCenter shuts down the machine - FYI
+- name: Create initial snapshot
+  vmware_guest_snapshot:
+    hostname: "{{ vmware_esxi.hostname }}"
+    validate_certs: "{{ vmware_esxi.validate_certs }}"
+    username: "{{ vmware_esxi.username }}"
+    password: "{{ vmware_esxi.password }}"
+    datacenter: "{{ vmware_esxi.datacenter }}"
+    folder: "{{ inventory_esxi.dest_folder }}"
+    snapshot_name: "{{ inventory_esxi.snapshot_name }}"
+    name: "{{ inventory_hostname }}"
+    description: "Created by Ansible - {{ inventory_hostname }} - Clean install - {{ lookup('pipe','date +%Y-%m-%d_%T') }}"
+    state: present
+  delegate_to: localhost
+  become: false
+
+- include_tasks: start_vm.yml

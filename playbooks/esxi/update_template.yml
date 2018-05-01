@@ -1,0 +1,27 @@
+---
+- name: Update RHEL template used by TeamCity
+  hosts: dest_template
+  gather_facts: no
+
+  tasks:
+    - include_role:
+        name: esxi
+        tasks_from: delete_vm
+
+    - include_role:
+        name: esxi
+        tasks_from: create_vm
+
+    - include_role:
+        name: common
+
+    - name: Sync filesystem(s)
+      command: sync
+
+    - include_role:
+        name: esxi
+        tasks_from: shutdown_vm
+
+    - include_role:
+        name: esxi
+        tasks_from: create_template

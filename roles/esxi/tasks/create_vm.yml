@@ -1,0 +1,38 @@
+---
+- name: Create VM
+  vmware_guest:
+    hostname: "{{ vmware_esxi.hostname }}"
+    validate_certs: "{{ vmware_esxi.validate_certs }}"
+    username: "{{ vmware_esxi.username }}"
+    password: "{{ vmware_esxi.password }}"
+    datacenter: "{{ vmware_esxi.datacenter }}"
+    esxi_hostname: "{{ vmware_esxi.esxi_hostname }}"
+    resource_pool: "{{ vmware_esxi.resource_pool }}"
+    annotation: "Created by Ansible - {{ inventory_hostname }} - Clean install - {{ lookup('pipe','date +%Y-%m-%d_%T') }}"
+    template: "{{ inventory_esxi.src_template }}"
+    folder: "{{ inventory_esxi.dest_folder }}"
+    name: "{{ inventory_hostname }}"
+    guest_id: "{{ hostvars[inventory_hostname].vmware_guest_config.guest_type }}"
+    disk: "{{ hostvars[inventory_hostname].vmware_guest_config.disk }}"
+    networks:
+      - name: "{{ inventory_esxi.networks.name }}"
+        device_type: "{{ vmware_esxi.vmware_guest_config.networks.device_type }}"
+        type: "{{ vmware_esxi.vmware_guest_config.networks.type }}"
+        ip: "{{ vmware_guest_config.networks.ip }}"
+        netmask: "{{ hostvars[inventory_hostname].vmware_guest_config.networks.netmask }}"
+        gateway: "{{ hostvars[inventory_hostname].vmware_guest_config.networks.gateway }}"
+    hardware:
+      num_cpus: "{{ hostvars[inventory_hostname].vmware_guest_config.hardware.num_cpus }}"
+      memory_mb: "{{ hostvars[inventory_hostname].vmware_guest_config.hardware.memory_mb }}"
+      scsi: "{{ vmware_esxi.vmware_guest_config.hardware.scsi }}"
+    customization:
+      dns_suffix: "{{ inventory_esxi.customization.dns_suffix }}"
+      domain: "{{ inventory_esxi.customization.domain }}"
+      hostname: "{{ inventory_hostname }}"
+    state: poweredon
+    # This causes a pause and waits for the machine to be "up" and gathers proper info
+    # Use wait_for_ip_address: no|false for speed, but a playbook may fail because of
+    # connectivity issues.
+    wait_for_ip_address: "{{ inventory_esxi.wait_for_ip_address }}"
+  delegate_to: localhost
+  become: false

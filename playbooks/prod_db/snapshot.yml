@@ -1,0 +1,10 @@
+---
+# Steps for resetting to a clean VM
+
+- name: Setup mongo role
+  hosts: mongo
+  tasks:
+    - include_role:
+        name: esxi
+        tasks_from: revert_snapshot
+    - roles: mongo

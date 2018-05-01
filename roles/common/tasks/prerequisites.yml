@@ -1,0 +1,39 @@
+---
+
+- name: Update System Packages
+  yum:
+    name: '*'
+    state: latest
+  become: true
+
+# Prerequisite software packages for all machines
+- name: Install OS things
+  yum:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - bzip2
+    - compat-libstdc++-33.i686
+    - compat-libstdc++-33.x86_64
+    - cpp
+    - erlang
+    - gcc
+    - gcc-c++
+    - kernel-devel
+    - libaio-devel
+    - libstdc++.i686
+    - libstdc++.x86_64
+    - libstdc++-static.i686
+    - libstdc++-static.x86_64
+    - libstdc++-devel.i686
+    - net-tools
+    - openssl-devel
+    - pam-devel.i686
+    - pam-devel.x86_64
+    - perl
+    - python
+    - python-devel
+    - python-setuptools
+    - sg3_utils
+    - wget
+  become: yes

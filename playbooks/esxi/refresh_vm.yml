@@ -1,0 +1,10 @@
+---
+- name: Refresh VMs
+  hosts: vms
+  # Disable Ansible fact gathering here because VMs may not be running/exist and failed
+  # fact gathering will kill the playbook execution.
+  gather_facts: no
+  tasks:
+    - include_role:
+        name: esxi
+        tasks_from: refresh_vm

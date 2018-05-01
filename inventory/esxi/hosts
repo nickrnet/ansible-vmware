@@ -1,0 +1,10 @@
+# Hosts used to manage templates in VMware ESXi/vCenter
+
+[local]
+localhost
+
+[dest_template]
+rhel74x64-updated
+
+[vms]
+rhel74x64

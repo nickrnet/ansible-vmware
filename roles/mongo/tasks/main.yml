@@ -1,0 +1,25 @@
+---
+# This task will install a Mongo instance
+
+#- name: Display all variables/facts known for the host
+#  debug:
+#    var: hostvars[inventory_hostname]
+
+- name: Install mongodb-org
+  yum:
+    name: mongodb-server
+    state: installed
+  become: yes
+
+- name: Configure mongod.conf to listen on all interfaces
+  replace:
+    dest: /etc/mongod.conf
+    regexp: '\b(bindIp)(\d*)\b'
+    replace: '#\1\2'
+
+- name: Start mongod at boot
+  service:
+    name: mongod
+    enabled: yes
+    state: started
+  become: yes

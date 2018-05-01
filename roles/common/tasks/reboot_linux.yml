@@ -1,0 +1,9 @@
+---
+
+- name: Reboot
+  shell: nohup bash -c "sleep 2s && shutdown -r now" &
+
+- name: Wait up to 3 minutes for hosts to become reachable
+  wait_for_connection:
+    timeout: 180
+    delay: 30

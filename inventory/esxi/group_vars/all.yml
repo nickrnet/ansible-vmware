@@ -1,0 +1,14 @@
+---
+ansible_connection: ssh
+
+inventory_esxi:
+  src_template: rhel74x64-base
+  dest_template: rhel74x64-updated
+  dest_folder: Your Data Center/vm/Group
+  resource_pool: Resources
+  networks:
+    name:  VM Network 1
+  customization:
+    dns_suffix: your.domain
+    domain: your.domain
+  wait_for_ip_address: yes

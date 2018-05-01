@@ -1,0 +1,20 @@
+---
+ansible_host: 10.1.1.250
+ansible_become: true
+ansible_become_pass: Anaws0mePW!
+
+vmware_guest_config:
+  guest_type: rhel7_64Guest
+  disk:
+    - size_gb: 25
+      type: thin
+      datastore: Datastore
+  networks:
+    ip: 10.1.1.250
+    netmask: 255.255.255.0
+    gateway: 10.1.1.1
+  hardware:
+    memory_mb: 4096
+    num_cpus: 2
+  customization:
+    hostname: rhel74x64-base

@@ -1,0 +1,17 @@
+---
+- name: Shutdown running VM
+  vmware_guest:
+    hostname: "{{ vmware_esxi.hostname }}"
+    validate_certs: "{{ vmware_esxi.validate_certs }}"
+    username: "{{ vmware_esxi.username }}"
+    password: "{{ vmware_esxi.password }}"
+    datacenter: "{{ vmware_esxi.datacenter }}"
+    esxi_hostname: "{{ vmware_esxi.esxi_hostname }}"
+    name: "{{ inventory_hostname }}"
+    resource_pool: "{{ vmware_esxi.resource_pool }}"
+    folder: "{{ inventory_esxi.dest_folder }}"
+    state: poweredoff
+    force: yes
+  delegate_to: localhost
+  become: false
+  ignore_errors: true # Typically an error only occurs if the machine doesn't already exist

@@ -1,0 +1,2 @@
+# Mongo (mongodb) role
+

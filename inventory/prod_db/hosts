@@ -1,0 +1,8 @@
+[local]
+localhost
+
+[mongo]
+mongo01
+
+[vms]
+mongo01

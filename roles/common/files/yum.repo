@@ -1,0 +1,6 @@
+[my-priv-repo]
+name=My Private Repo
+baseurl=https://repo/redhat
+enabled=1
+gpgcheck=0
+sslverify=0

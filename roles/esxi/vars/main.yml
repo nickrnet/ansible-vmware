@@ -1,0 +1,17 @@
+---
+vmware_esxi:
+  hostname: vcenter.your.domain
+  validate_certs: False
+  username: administrator@your.domain
+  password: banana
+  esxi_hostname: esxi01.your.domain
+  datacenter: Your Data Center
+  resource_pool: Resources
+
+  # These are set here since they are typically ESXi hardware dependent
+  vmware_guest_config:
+    networks:
+      device_type: vmxnet3
+      type: static
+    hardware:
+      scsi: paravirtual

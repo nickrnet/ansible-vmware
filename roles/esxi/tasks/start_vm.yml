@@ -1,0 +1,25 @@
+---
+- name: Start VM
+  vmware_guest:
+    hostname: "{{ vmware_esxi.hostname }}"
+    validate_certs: "{{ vmware_esxi.validate_certs }}"
+    username: "{{ vmware_esxi.username }}"
+    password: "{{ vmware_esxi.password }}"
+    datacenter: "{{ vmware_esxi.datacenter }}"
+    esxi_hostname: "{{ vmware_esxi.esxi_hostname }}"
+    resource_pool: "{{ vmware_esxi.resource_pool }}"
+    name: "{{ inventory_hostname }}"
+    folder: "{{ inventory_esxi.dest_folder }}"
+    state: poweredon
+    force: yes
+    # This causes a pause and waits for the machine to be "up" and outputs proper info
+    # Use 'wait_for_ip_address: no' for speed, but a playbook may fail because of
+    # connectivity issues.
+    wait_for_ip_address: "{{ inventory_esxi.wait_for_ip_address }}"
+  delegate_to: localhost
+  become: false
+  ignore_errors: true # Typically an error only occurs if the machine doesn't already exist
+
+- name: Wait 2 minutes for hosts to become reachable
+  wait_for_connection:
+    timeout: 120

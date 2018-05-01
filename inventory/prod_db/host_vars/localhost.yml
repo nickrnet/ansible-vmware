@@ -1,0 +1,7 @@
+---
+ansible_host: 127.0.0.1
+ansible_become: false
+
+ansible_user: starlord # Set this to the appropriate user running Ansible - machine dependent
+
+ansible_python_interpreter: /Library/Frameworks/Python.framework/Versions/2.7/bin/python # Set this to the appropriate python running Ansible - machine dependent
